@@ -1,0 +1,56 @@
+.filters {
+  &__wrapper {
+    padding: 26px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: $md) {
+      flex-wrap: wrap;
+    }
+  }
+  &__danger {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    & label {
+      margin-top: 3px;
+      user-select: none;
+    }
+    @media (max-width: $lg) {
+      flex: 0 0 230px;
+    }
+    @media (max-width: $md) {
+      margin-bottom: 14px;
+    }
+  }
+  &__danger-input {
+    margin-right: 5px;
+    height: 18px;
+    width: 18px;
+  }
+  &__distance {
+    display: flex;
+    display: flex;
+    word-wrap: normal;
+    flex-wrap: wrap;
+    justify-self: flex-end;
+    & span {
+      margin-right: 5px;
+    }
+  }
+  &__distance-types {
+  }
+  &__distance-type {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+    &:not(&--active) {
+      text-decoration: underline;
+    }
+    &--active {
+      font-weight: 700;
+    }
+  }
+}

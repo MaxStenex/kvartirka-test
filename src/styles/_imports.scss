@@ -1,1 +1,10 @@
+@import "./variables";
 @import "./normalize.scss";
+
+// components/shared
+@import "./components/shared/Header.scss";
+@import "./components/shared/Asteroids.scss";
+@import "./components/shared/Footer.scss";
+
+// components
+@import "./components/home/Filters.scss";

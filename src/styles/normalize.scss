@@ -11,6 +11,8 @@
 }
 
 a {
+  color: inherit;
+  text-decoration: none;
   &:focus,
   &:active {
     outline: none;

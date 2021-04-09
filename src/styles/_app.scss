@@ -1,6 +1,18 @@
 @import "./_imports.scss";
 
 body {
-  font-family: "HelveticaRegular";
-  font-size: 14px;
+  font-family: "Helvetica";
+  font-size: 16px;
+}
+
+.container {
+  max-width: $lg;
+  padding: 0px 15px;
+  margin: 0 auto;
+  @media (max-width: $lg) {
+    max-width: $md;
+  }
+  @media (max-width: $md) {
+    max-width: none;
+  }
 }
