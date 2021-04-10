@@ -1,17 +1,11 @@
 import React from "react";
+import { AsteroidType } from "../../../types";
 
-type Props = {
-  name: string;
-  date: string;
-  distance: string;
-  size: number;
-  isDangerous: boolean;
-};
-
-export const Asteroid: React.FC<Props> = ({
+export const Asteroid: React.FC<AsteroidType> = ({
   name,
   date,
-  distance,
+  distanceInKm,
+  distanceToMoons,
   size,
   isDangerous,
 }) => {
@@ -44,7 +38,11 @@ export const Asteroid: React.FC<Props> = ({
             <li className="asteroid__data-item">
               <h4 className="asteroid__data-title">Расстояние</h4>
               <div className="asteroid__data-dots"></div>
-              <span className="asteroid__data-data">{distance}</span>
+              <span className="asteroid__data-data">
+                {distanceInKm
+                  ? distanceInKm + "км"
+                  : distanceToMoons + "расстояний до луны"}
+              </span>
             </li>
             <li className="asteroid__data-item">
               <h4 className="asteroid__data-title">Размер</h4>
