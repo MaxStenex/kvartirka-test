@@ -1,5 +1,7 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { AsteroidType } from "../../../types";
+import { formatDate } from "../../../utils/formatDate";
 
 export const Asteroid: React.FC<AsteroidType> = ({
   name,
@@ -9,6 +11,9 @@ export const Asteroid: React.FC<AsteroidType> = ({
   size,
   isDangerous,
 }) => {
+  const router = useRouter();
+  const formatedDate = formatDate(date);
+
   return (
     <li className={`asteroid ${isDangerous ? " asteroid--dangerous" : ""}`}>
       <div className="asteroid__wrapper">
@@ -33,21 +38,21 @@ export const Asteroid: React.FC<AsteroidType> = ({
             <li className="asteroid__data-item">
               <h4 className="asteroid__data-title">Дата</h4>
               <div className="asteroid__data-dots"></div>
-              <span className="asteroid__data-data">{date}</span>
+              <span className="asteroid__data-data">{formatedDate}</span>
             </li>
             <li className="asteroid__data-item">
               <h4 className="asteroid__data-title">Расстояние</h4>
               <div className="asteroid__data-dots"></div>
               <span className="asteroid__data-data">
-                {distanceInKm
-                  ? distanceInKm + "км"
-                  : distanceToMoons + "расстояний до луны"}
+                {router.query.distance === "moon"
+                  ? distanceToMoons + " расстояний до луны"
+                  : distanceInKm + " км"}
               </span>
             </li>
             <li className="asteroid__data-item">
               <h4 className="asteroid__data-title">Размер</h4>
               <div className="asteroid__data-dots"></div>
-              <span className="asteroid__data-data">{size}</span>
+              <span className="asteroid__data-data">{size} м</span>
             </li>
           </ul>
         </div>

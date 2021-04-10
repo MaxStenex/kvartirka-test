@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { fetchAsteroidsInfo } from "../api";
 import { Filters } from "../components/home/Filters";
 import { Asteroids } from "../components/shared/Asteroids";
 import { Footer } from "../components/shared/Footer";
 import { Header } from "../components/shared/Header";
-import { AsteroidType } from "../types";
+import { AsteroidType, DistanceType } from "../types";
 
 type Props = {
   asteroids: AsteroidType[];
@@ -13,9 +14,19 @@ type Props = {
 const LIMIT = 10;
 
 const Home: React.FC<Props> = ({ asteroids }) => {
+  const router = useRouter();
   const [filteredAsteroids, setFilteredAsteroids] = useState(
     Array.from(asteroids).splice(0, LIMIT)
   );
+  useEffect(() => {
+    if (router.query.dangerous === "true") {
+      setFilteredAsteroids(
+        Array.from(filteredAsteroids).filter((ast) => ast.isDangerous === true)
+      );
+    } else {
+      setFilteredAsteroids(Array.from(asteroids).splice(0, LIMIT));
+    }
+  }, [router.query.dangerous, asteroids]);
 
   return (
     <>

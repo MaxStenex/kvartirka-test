@@ -15,6 +15,7 @@
     & label {
       margin-top: 3px;
       user-select: none;
+      cursor: pointer;
     }
     @media (max-width: $lg) {
       flex: 0 0 230px;
@@ -27,6 +28,7 @@
     margin-right: 5px;
     height: 18px;
     width: 18px;
+    cursor: pointer;
   }
   &__distance {
     display: flex;
@@ -36,15 +38,22 @@
     justify-self: flex-end;
     & span {
       margin-right: 5px;
+      display: flex;
+      align-items: center;
     }
-  }
-  &__distance-types {
   }
   &__distance-type {
     margin-right: 5px;
-
+    margin-bottom: 3px;
+    font-size: inherit;
+    &:after {
+      content: ",";
+    }
     &:last-child {
       margin-right: 0;
+      &:after {
+        content: none;
+      }
     }
     &:not(&--active) {
       text-decoration: underline;

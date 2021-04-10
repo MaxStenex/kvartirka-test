@@ -7,3 +7,8 @@ export type AsteroidType = {
   size: number;
   isDangerous: boolean;
 };
+
+export enum DistanceType {
+  KILOMETERS = "KILOMETERS",
+  TO_MOON = "TO_MOON",
+}
