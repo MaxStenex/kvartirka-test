@@ -10,7 +10,7 @@ export const Asteroids: React.FC<Props> = ({ items }) => {
   return (
     <div className="asteroids">
       <div className="container">
-        <ul className="asteroids__list">
+        <div className="asteroids__list">
           {items.map((ast) => (
             <Asteroid
               key={ast.id}
@@ -23,7 +23,7 @@ export const Asteroids: React.FC<Props> = ({ items }) => {
               isDangerous={ast.isDangerous}
             />
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

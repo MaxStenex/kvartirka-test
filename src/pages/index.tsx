@@ -35,6 +35,10 @@ const Home: React.FC<Props> = ({ asteroids }) => {
 
   useEffect(() => {
     const loadMoreHandler = () => {
+      if (offset > asteroids.length) {
+        return;
+      }
+
       if (scrollRef.current.getBoundingClientRect().top <= window.innerHeight) {
         if (router.query.dangerous === "true") {
           setFilteredAsteroids((p) =>
@@ -65,7 +69,7 @@ const Home: React.FC<Props> = ({ asteroids }) => {
       <Header />
       <Filters />
       <Asteroids items={filteredAsteroids} />
-      <div ref={scrollRef} className="scroll"></div>
+      <div ref={scrollRef} className="__scroll"></div>
       <Footer />
     </>
   );
@@ -73,7 +77,7 @@ const Home: React.FC<Props> = ({ asteroids }) => {
 
 export default Home;
 
-export async function getServerSideProps(): Promise<{ props: Props }> {
+export const getServerSideProps = async (): Promise<{ props: Props }> => {
   try {
     const { data } = await fetchAsteroidsInfo(new Date().toLocaleDateString());
     const asteroidsArrs: Array<any> = Object.values(data.near_earth_objects);
@@ -100,4 +104,4 @@ export async function getServerSideProps(): Promise<{ props: Props }> {
   } catch (error) {
     return { props: { asteroids: [] } };
   }
-}
+};

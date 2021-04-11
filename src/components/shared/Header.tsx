@@ -1,4 +1,5 @@
 import React from "react";
+import NextLink from "next/link";
 
 export const Header = () => {
   return (
@@ -6,7 +7,9 @@ export const Header = () => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__info">
-            <div className="header__app-name">ARMAGGEDON V</div>
+            <NextLink href="/">
+              <a className="header__app-name">ARMAGGEDON V</a>
+            </NextLink>
             <div className="header__about">
               Сервис мониторинга и уничтожения астероидов, опасно подлетающих к Земле.
             </div>
