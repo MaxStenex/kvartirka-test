@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchAsteroidsInfo } from "../api";
 import { Filters } from "../components/home/Filters";
 import { Asteroids } from "../components/shared/Asteroids";
 import { Footer } from "../components/shared/Footer";
 import { Header } from "../components/shared/Header";
-import { AsteroidType, DistanceType } from "../types";
+import { AsteroidType } from "../types";
 
 type Props = {
   asteroids: AsteroidType[];
@@ -15,24 +15,57 @@ const LIMIT = 10;
 
 const Home: React.FC<Props> = ({ asteroids }) => {
   const router = useRouter();
+  const [offset, setOffset] = useState(LIMIT);
   const [filteredAsteroids, setFilteredAsteroids] = useState(
-    Array.from(asteroids).splice(0, LIMIT)
+    Array.from(asteroids).slice(0, LIMIT)
   );
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (router.query.dangerous === "true") {
       setFilteredAsteroids(
-        Array.from(filteredAsteroids).filter((ast) => ast.isDangerous === true)
+        Array.from(asteroids)
+          .slice(0, offset)
+          .filter((ast) => ast.isDangerous === true)
       );
     } else {
-      setFilteredAsteroids(Array.from(asteroids).splice(0, LIMIT));
+      setFilteredAsteroids(Array.from(asteroids).slice(0, offset));
     }
   }, [router.query.dangerous, asteroids]);
+
+  useEffect(() => {
+    const loadMoreHandler = () => {
+      if (scrollRef.current.getBoundingClientRect().top <= window.innerHeight) {
+        if (router.query.dangerous === "true") {
+          setFilteredAsteroids((p) =>
+            [...p, ...Array.from(asteroids).slice(offset, offset + LIMIT)].filter(
+              (ast) => ast.isDangerous === true
+            )
+          );
+        } else {
+          setFilteredAsteroids((p) => [
+            ...p,
+            ...Array.from(asteroids).slice(offset, offset + LIMIT),
+          ]);
+        }
+        setOffset((prev) => prev + LIMIT);
+      }
+    };
+
+    window.addEventListener("scroll", loadMoreHandler);
+    window.addEventListener("load", loadMoreHandler);
+    return () => {
+      window.removeEventListener("scroll", loadMoreHandler);
+      window.removeEventListener("load", loadMoreHandler);
+    };
+  }, [offset, asteroids, scrollRef.current, router.query.dangerous]);
 
   return (
     <>
       <Header />
       <Filters />
       <Asteroids items={filteredAsteroids} />
+      <div ref={scrollRef} className="scroll"></div>
       <Footer />
     </>
   );
