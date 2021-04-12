@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import { AsteroidType } from "../../../types";
 import { formatDate } from "../../../utils/formatDate";
 import NextLink from "next/link";
+import { DestroyCartContext } from "../../../state/destroyCart/context";
+import { addInCart, removeFromCart } from "../../../state/destroyCart/actions";
 
 export const Asteroid: React.FC<AsteroidType> = ({
   name,
@@ -15,6 +17,18 @@ export const Asteroid: React.FC<AsteroidType> = ({
 }) => {
   const router = useRouter();
   const formatedDate = formatDate(date);
+  const { destroyCartState, destroyCartDispatch } = useContext(DestroyCartContext);
+  const isInCart = destroyCartState.asteroids.some((ast) => ast.id === id);
+
+  const onDestroyButtonClick = () => {
+    if (isInCart) {
+      destroyCartDispatch(removeFromCart(id));
+    } else {
+      destroyCartDispatch(
+        addInCart({ name, date, distanceInKm, distanceToMoons, size, isDangerous, id })
+      );
+    }
+  };
 
   return (
     <div className={`asteroid ${isDangerous ? " asteroid--dangerous" : ""}`}>
@@ -66,7 +80,9 @@ export const Asteroid: React.FC<AsteroidType> = ({
         </div>
         <div className="asteroid__grade">
           Оценка: <span>{isDangerous ? "опасен" : "не опасен"}</span>
-          <button>На уничтожение</button>
+          <button onClick={onDestroyButtonClick}>
+            {isInCart ? "Не уничтожать" : "На уничтожение"}
+          </button>
         </div>
       </div>
     </div>

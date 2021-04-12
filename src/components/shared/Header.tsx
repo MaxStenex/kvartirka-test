@@ -1,7 +1,10 @@
 import React from "react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 export const Header = () => {
+  const router = useRouter();
+
   return (
     <header className="header">
       <div className="container">
@@ -16,11 +19,23 @@ export const Header = () => {
           </div>
           <nav className="header__nav">
             <ul className="header__links">
-              <li className="header__link header__link--active">
-                <a href="/">Астероиды</a>
+              <li
+                className={`header__link ${
+                  router.pathname === "/" ? " header__link--active" : ""
+                }`}
+              >
+                <NextLink href="/">
+                  <a>Астероиды</a>
+                </NextLink>
               </li>
-              <li className="header__link">
-                <a href="/">Уничтожение</a>
+              <li
+                className={`header__link ${
+                  router.pathname === "/destroy-cart" ? " header__link--active" : ""
+                }`}
+              >
+                <NextLink href="/destroy-cart">
+                  <a>Уничтожение</a>
+                </NextLink>
               </li>
             </ul>
           </nav>

@@ -14,7 +14,7 @@ export const Approaches: React.FC<Props> = ({ approaches }) => {
         {approaches.map((a) => {
           const splitedDate = a.fullDate.split(" ");
           return (
-            <li className="approaches__item approach">
+            <li key={a.fullDate} className="approaches__item approach">
               <div className="approach__section">
                 <div className="approach__section-title">Скорость</div>
                 <div className="approach__dots"></div>

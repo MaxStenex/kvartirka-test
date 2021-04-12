@@ -39,7 +39,10 @@ const Home: React.FC<Props> = ({ asteroids }) => {
         return;
       }
 
-      if (scrollRef.current.getBoundingClientRect().top <= window.innerHeight) {
+      if (
+        scrollRef.current &&
+        scrollRef.current.getBoundingClientRect().top <= window.innerHeight
+      ) {
         if (router.query.dangerous === "true") {
           setFilteredAsteroids((p) =>
             [...p, ...Array.from(asteroids).slice(offset, offset + LIMIT)].filter(
