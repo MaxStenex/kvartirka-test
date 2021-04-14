@@ -82,7 +82,7 @@ export default Home;
 
 export const getServerSideProps = async (): Promise<{ props: Props }> => {
   try {
-    const { data } = await fetchAsteroidsInfo(new Date().toLocaleDateString());
+    const { data } = await fetchAsteroidsInfo(new Date());
     const asteroidsArrs: Array<any> = Object.values(data.near_earth_objects);
     const asteroids: AsteroidType[] = [];
 
